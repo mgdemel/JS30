@@ -1,7 +1,7 @@
 // - Volume slider
 // - Speed of play slider
+let mousedown = false;
 
-// const app = document.querySelector(".player");
 const player = document.querySelector(".viewer");
 const progress = document.querySelector('.progress');
 const progressBar = document.querySelector(".progress__filled")
@@ -17,7 +17,6 @@ function updateProgress() {
 
 function scrub(e) {
   const scrubTime = (e.offsetX / progress.offsetWidth) * player.duration;
-  console.log(scrubTime);
   player.currentTime = scrubTime;
 }
 
@@ -52,3 +51,7 @@ volumeSlider.addEventListener("click", handleSound);
 speedSlider.addEventListener("click", handleSpeed);
 skippers.forEach((skipper) => skipper.addEventListener("click", handleSkip));
 progress.addEventListener("click", scrub);
+progress.addEventListener("mousemove", (e) => mousedown && scrub(e)); //only starts to track mouse movement when mousedown is true!
+progress.addEventListener("mousedown", () => mousedown = true);
+progress.addEventListener("mouseup", () => mousedown = false);
+
